@@ -1,0 +1,84 @@
+﻿<Page x:Class="Generate114514.Pages.SimpleArgumentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Generate114514.Pages"
+      xmlns:system="clr-namespace:System;assembly=mscorlib"
+      xmlns:functions="clr-namespace:Generate114514.Functions"
+      xmlns:controls="clr-namespace:Generate114514.Controls"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      x:Name="_this"
+      Title="SimpleArgumentPage">
+    <Page.Resources>
+        <DataTemplate x:Key="listContent" DataType="{x:Type functions:IntContent}">
+            <TextBox Text="{Binding Value,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Width="200"/>
+        </DataTemplate>
+        <Style TargetType="Button">
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+        <Style TargetType="controls:HeaderedTextBox">
+            <Setter Property="FontSize" Value="16"/>
+        </Style>
+        <RoutedUICommand x:Key="nextPageCmd" Text="Next Page"/>
+    </Page.Resources>
+    <Page.CommandBindings>
+        <CommandBinding Command="{StaticResource nextPageCmd}" Executed="CommandBinding_Executed"/>
+    </Page.CommandBindings>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ScrollViewer>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <Grid Margin="0,0,20,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="300"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto"/>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="Auto"/>
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="参与计算的元素" FontSize="18"/>
+                        <ListView Grid.Row="1" x:Name="viewElements" ItemTemplate="{StaticResource listContent}">
+                        </ListView>
+                        <Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Button Grid.Column="0" Content="添加元素" Width="100" Click="Button_Add_Click"/>
+                            <Button Grid.Column="1" Content="移除元素" Width="100" Click="Button_Remove_Click"/>
+                        </Grid>
+                    </Grid>
+
+                    <controls:HeaderedTextBox Grid.Row="1" Header="要产生的数字" Text="{Binding ElementName=_this,Path=targetValue,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                </Grid>
+                <TextBlock Grid.Column="1" Width="200" TextWrapping="Wrap">
+                    <Bold>简单论证</Bold>
+                    <LineBreak/>
+                    生产形如(1+1+4-5-1)*4=0这样的表达式。
+                    <LineBreak/>
+                </TextBlock>
+            </Grid>
+        </ScrollViewer>
+        <Button x:Name="next" Grid.Row="1" Content="下一步" Width="100" Command="{StaticResource nextPageCmd}"/>
+        <!--<TextBlock Text="要产生的数字" Margin="4"/>
+            <TextBox Grid.Row="1" Margin="4"/>-->
+    </Grid>
+</Page>
